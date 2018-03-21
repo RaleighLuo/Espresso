@@ -12,7 +12,9 @@ Excel驱动自动创建Espresso单元测试类
 IReadSheets API
 
 1.setTransformLanguage 设置测试类转化语言 支持java／kotlin 
+
 2.read 读取excel并创建所有单元测试用例 
+
 3.executeAllTest 集成所有单元测试用例，并自动执行（执行前提，设备必须先安装app）
 
 View API
