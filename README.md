@@ -8,6 +8,7 @@ Excel驱动自动创建Espresso单元测试类
 简介：不想写单元测试的程序员们，可使用此工具类，快速生成单元测试类，并自动执行，帮助程序员提高代码质量～
 
 使用方法：请参考项目下［使用说明文档.docx］
+或博客：http://blog.csdn.net/xiaoluoli88/article/details/79635992
 
 IReadSheets API
 
