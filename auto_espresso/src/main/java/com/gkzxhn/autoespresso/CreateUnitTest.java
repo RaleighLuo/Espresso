@@ -34,7 +34,7 @@ public class CreateUnitTest {
         IReadSheets read=new ReadSheets();
         //设置转化语言，默认是java
         read.setTransformLanguage(TransformLanguage.KOTLIN);
-        read.read(driver);
+        read.read(driver,true);
         System.out.print("执行完成！");
         //创建集成测试并执行
 		read.executeAllTest(packageName,unitPath);

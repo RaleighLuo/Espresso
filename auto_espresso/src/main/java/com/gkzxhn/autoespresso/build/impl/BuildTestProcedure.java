@@ -8,6 +8,7 @@ import com.gkzxhn.autoespresso.code.RecyclerViewCode;
 import com.gkzxhn.autoespresso.code.SystemCode;
 import com.gkzxhn.autoespresso.code.ViewCode;
 import com.gkzxhn.autoespresso.code.ViewPagerCode;
+import com.gkzxhn.autoespresso.code.WebViewCode;
 import com.gkzxhn.autoespresso.code.WindowCode;
 import com.gkzxhn.autoespresso.config.TableConfig;
 import com.gkzxhn.autoespresso.entity.MergedRegionEntity;
@@ -86,6 +87,8 @@ public class BuildTestProcedure implements IBuildTestProcedure {
                 result = excuteMethod(WindowCode.class.getDeclaredMethods());
             }else if (name.equals(DrawerCode.class.getSimpleName())) {
                 result = excuteMethod(DrawerCode.class.getDeclaredMethods());
+            }else if (name.equals(WebViewCode.class.getSimpleName())) {
+                result = excuteMethod(WebViewCode.class.getDeclaredMethods());
             }
         return result;
     }

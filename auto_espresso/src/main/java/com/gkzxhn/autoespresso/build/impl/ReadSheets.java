@@ -39,11 +39,11 @@ public class ReadSheets implements IReadSheets {
      * @param driver
      */
     @Override
-    public void read(DriverEntity driver) {
+    public void read(DriverEntity driver,boolean isClearUnitClassNames) {
         File file =new  File(driver.getDriverFilePath());
         int sheetsMumber= ExcelUtil.getSheetsNumber(file);
         //清空模块名称
-        Config.MODULE_NAMES.clear();
+        if(isClearUnitClassNames)Config.MODULE_NAMES.clear();
         for(int sheetIndex=0;sheetIndex<sheetsMumber;sheetIndex++){
             String sheetname=ExcelUtil.getSheetName(file,sheetIndex);
             //过滤sheet配置文件
