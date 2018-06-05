@@ -196,3 +196,16 @@ Drawer
 关闭抽屉 open_closed_drawer_gravity
 
 关闭抽屉 close_opened_drawer_gravity
+
+WebView
+强制开启javascript属性 forceJavascriptEnabled
+点击 click
+点击子级 click_sub
+清除文本 clear_text
+清除子级文本 clear_text_sub
+输入文本  input_text
+输入文本  input_text_sub
+验证文本  check_text
+验证子级文本 check_text_sub
+验证Url check_url
+验证子级Url check_url_sub
