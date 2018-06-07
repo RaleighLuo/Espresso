@@ -153,7 +153,7 @@ public class ExcelUtil {
 				try {
 					value = cell.getStringCellValue();
 				}catch (Exception e){
-					e.printStackTrace();
+//					e.printStackTrace();
 					value=df.format(cell.getNumericCellValue());
 				}
 				break;
@@ -266,7 +266,7 @@ public class ExcelUtil {
 		{
 			wb.write(os);
 		} catch (IOException e){
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		byte[] content = os.toByteArray();
 		File file = new File(path);//Excel文件生成后存储的位置。
@@ -278,7 +278,7 @@ public class ExcelUtil {
 			os.close();
 			fos.close();
 		}catch (Exception e){
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 }
