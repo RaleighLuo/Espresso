@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
  */
 
 public interface IBuildTestMethod {
-    void init(Sheet sheet, int firstRow, int lastRow);
+    void init(Sheet sheet,String moduleNumber, int firstRow, int lastRow);
     String build();
     String writeMethod(String caseNumber, String caseName, String precondition);
     String writeMethodEnd();

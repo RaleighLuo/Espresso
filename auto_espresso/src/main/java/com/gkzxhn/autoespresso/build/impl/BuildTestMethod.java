@@ -24,13 +24,15 @@ public class BuildTestMethod implements IBuildTestMethod {
     private Map<String,Integer> mColNameMaps =new HashMap<>();
     private int mRow;
     private int mMaxRow;
+    private String mModuleNumber;
     private IBuildTestProcedure mBuildTestProcedure=new BuildTestProcedure();
 
     @Override
-    public void init(Sheet sheet,int firstRow,int lastRow) {
+    public void init(Sheet sheet,String mModuleNumber,int firstRow,int lastRow) {
         this.mSheet=sheet;
         this.mRow=firstRow;
         this.mMaxRow=lastRow;
+        this.mModuleNumber=mModuleNumber;
         readHeaderNames(mRow);
         mRow++;//value行
     }

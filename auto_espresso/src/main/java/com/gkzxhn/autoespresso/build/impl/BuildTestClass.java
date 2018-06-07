@@ -79,7 +79,7 @@ public class BuildTestClass implements IBuildTestClass {
                 header.setClassPackageName(getValue(TableConfig.CLASS_PACKAGE_NAME));
                 header.setPremissions(getValue(TableConfig.PREMISSIONS));
                 createFile();
-                mBuildTestMethod.init(mSheet, firstRow, lastRow);
+                mBuildTestMethod.init(mSheet,header.getModuleNumber(), firstRow, lastRow);
                 String classContent = mBuildTestMethod.build();
                 write(classContent);
             }

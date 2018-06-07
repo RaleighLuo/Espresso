@@ -1,5 +1,7 @@
 package com.gkzxhn.app
 
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
@@ -13,6 +15,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btn_finished.setOnClickListener { finish() }
+        btn_second.setOnClickListener{ startActivity(Intent(this,SecondActivity::class.java)) }
+        btn_three.setOnClickListener {
+            startActivityForResult(Intent(this, ThreedActivity::class.java), Activity.RESULT_OK);
+        }
+
         //延迟加载的使用
 //        setIdleNow(false); 执行网络请求或耗时操作前，设置等待
 //        requestHttp(); 执行网络请求

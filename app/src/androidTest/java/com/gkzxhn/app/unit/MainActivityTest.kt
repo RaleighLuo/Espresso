@@ -78,4 +78,40 @@ class MainActivityTest {
 		}
 	}
 
+	/**
+	 * 验证页面关闭
+	 */
+	@Test
+	fun APP_Main_003() {
+		with(mActivityTestRule.activity){
+			TIntent.intercept_classname("com.gkzxhn.app.SecondActivity",null);
+			//点击关闭按钮
+			TView.click_id(R.id.btn_second)
+			//验证页面已关闭
+			TIntent.verify_classname("com.gkzxhn.app.SecondActivity");
+		}
+	}
+	/**
+	 * 验证页面关闭
+	 */
+	@Test
+	fun APP_Main_004() {
+		with(mActivityTestRule.activity){
+			TIntent.intercept_classname("com.gkzxhn.app.ThreedActivity",Instrumentation.ActivityResult(Activity.RESULT_OK,null))
+			//点击关闭按钮
+			TView.click_id(R.id.btn_three)
+			//验证页面已关闭
+			TIntent.verify_classname("com.gkzxhn.app.ThreedActivity")
+		}
+	}
+	@Test
+	fun APP_Main_005() {
+		with(mActivityTestRule.activity){
+			TIntent.intercept_classname("com.gkzxhn.app.ThreedActivity",Instrumentation.ActivityResult(Activity.RESULT_OK,null))
+			//点击关闭按钮
+			TView.click_id(R.id.btn_three)
+			//验证页面已关闭
+			TIntent.verify_classname("com.gkzxhn.app.ThreedActivity")
+		}
+	}
 }
