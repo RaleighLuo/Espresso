@@ -9,8 +9,33 @@ public class ModuleEntity {
     private String moduleNumber;//模块编号
     private String className;//测试类名
     private String classPackageName;//所在包名
-    private String premissions;//所需权限
-    private String intentExtra;//intent extra
+    private String sharedPreferencesName;//本地存储名称
+    private int firstRow;//第一行
+    private int lastRow;//最后一行
+
+    public String getSharedPreferencesName() {
+        return sharedPreferencesName;
+    }
+
+    public void setSharedPreferencesName(String sharedPreferencesName) {
+        this.sharedPreferencesName = sharedPreferencesName;
+    }
+
+    public int getFirstRow() {
+        return firstRow;
+    }
+
+    public void setFirstRow(int firstRow) {
+        this.firstRow = firstRow;
+    }
+
+    public int getLastRow() {
+        return lastRow;
+    }
+
+    public void setLastRow(int lastRow) {
+        this.lastRow = lastRow;
+    }
 
     public ModuleEntity() {
     }
@@ -45,21 +70,5 @@ public class ModuleEntity {
 
     public void setClassPackageName(String classPackageName) {
         this.classPackageName = classPackageName;
-    }
-
-    public String getPremissions() {
-        return premissions;
-    }
-
-    public void setPremissions(String premissions) {
-        this.premissions = premissions;
-    }
-
-    public String getIntentExtra() {
-        return intentExtra;
-    }
-
-    public void setIntentExtra(String intentExtra) {
-        this.intentExtra = intentExtra;
     }
 }

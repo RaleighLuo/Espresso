@@ -1,5 +1,7 @@
 package com.gkzxhn.autoespresso.build.impl;
 
+import android.Manifest;
+
 import com.gkzxhn.autoespresso.build.IBuildTestClass;
 import com.gkzxhn.autoespresso.build.IReadSheets;
 import com.gkzxhn.autoespresso.config.ClassConfig;

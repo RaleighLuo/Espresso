@@ -134,7 +134,7 @@ public class TWebView {
      * @param value
      * @param matcherUrl
      */
-    public static void check_url(String type,String value,String subType,String subValue,String matcherUrl){
+    public static void check_url_sub(String type,String value,String subType,String subValue,String matcherUrl){
         onWebView()
                 .withElement(DriverAtoms.findElement(getLocator(type), value))
                 //子级div ID
@@ -148,7 +148,7 @@ public class TWebView {
      * @param value
      * @param matcherUrl
      */
-    public static void check_url_sub(String type,String value,String matcherUrl){
+    public static void check_url(String type,String value,String matcherUrl){
         onWebView()
                 .withElement(DriverAtoms.findElement(getLocator(type), value))
                 .perform(DriverAtoms.webClick())

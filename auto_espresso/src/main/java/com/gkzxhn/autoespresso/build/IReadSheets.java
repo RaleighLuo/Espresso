@@ -9,6 +9,6 @@ import com.gkzxhn.autoespresso.entity.DriverEntity;
 
 public interface IReadSheets {
      void setTransformLanguage(TransformLanguage language);
-     void read(DriverEntity driver,boolean isClearUnitClassNames);
+     void read(DriverEntity driver, boolean isClearUnitClassNames);
      void executeAllTest(String packagename, String testClassDir);
 }

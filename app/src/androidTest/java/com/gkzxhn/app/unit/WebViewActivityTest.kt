@@ -1,59 +1,75 @@
 package com.gkzxhn.app.unit
 
-import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.intent.rule.IntentsTestRule
-import android.support.test.espresso.web.assertion.WebViewAssertions.webMatches
-import android.support.test.espresso.web.sugar.Web.onWebView
-import android.support.test.espresso.web.webdriver.DriverAtoms
-import android.support.test.espresso.web.webdriver.Locator
-import android.support.test.filters.LargeTest
-import android.support.test.runner.AndroidJUnit4
-import com.gkzxhn.app.MainActivity
 import com.gkzxhn.app.WebViewActivity
-import com.gkzxhn.autoespresso.operate.TWebView
-import org.hamcrest.Matchers.containsString
-import org.junit.FixMethodOrder
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
+import com.gkzxhn.app.R
 import org.junit.runners.MethodSorters
+import org.junit.runner.RunWith
+import org.junit.*
+import android.support.test.runner.AndroidJUnit4
+import android.support.test.filters.LargeTest
+import android.support.test.espresso.intent.rule.IntentsTestRule
+import android.support.test.espresso.IdlingResource
+import android.support.test.espresso.IdlingRegistry
+import android.content.Intent
+import android.app.Instrumentation
+import android.os.Build
+import android.support.test.InstrumentationRegistry.*
+import com.gkzxhn.autoespresso.operate.*
+import android.app.Activity
+import android.text.InputType
+import android.Manifest
+import android.provider.MediaStore
+import android.support.test.InstrumentationRegistry
+import android.os.Environment
+import android.view.Gravity
+import android.content.Context
+import android.content.SharedPreferences
 
-/**
- * Created by Raleigh.Luo on 18/6/4.
+/** 网页 WEBVIEW
+ * Created by Raleigh.Luo on 2018/06/12 11:41:47.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @LargeTest
 class WebViewActivityTest {
-    @Rule
-    @JvmField
-    val mActivityTestRule: IntentsTestRule<WebViewActivity> = object : IntentsTestRule<WebViewActivity>(WebViewActivity::class.java) {
-        override fun getActivityIntent(): Intent {
-            val intent = Intent(InstrumentationRegistry.getInstrumentation().targetContext,WebViewActivity::class.java)
-            return intent
-        }
-        override fun afterActivityLaunched() {
-            TWebView.forceJavascriptEnabled()
-        }
-    }
-    @Test
-    fun WebView() {
-        TWebView.clear_text("text_input")
-        Thread.sleep(1000)
-        // Enter text into the input element
-        TWebView.input_text("text_input","Raleigh")
-        Thread.sleep(1000)
-        //Click on element.
-        TWebView.click_id("changeTextBtn")
-        Thread.sleep(1000)
-        // Verify that the text is displayed
-        TWebView.check_text("message","Raleigh")
-        Thread.sleep(1000)
-//        TWebView.reset("changeTextBtn")
-//        val url="file:///android_asset/web_form.html"
-//        TWebView.check_url("changeTextBtn",url)
-//        Thread.sleep(1000)
-        Thread.sleep(5000)
-    }
+	private var mIdlingResource: IdlingResource?=null
+	@Rule
+	@JvmField
+	val mActivityTestRule: IntentsTestRule<WebViewActivity> = object : IntentsTestRule<WebViewActivity>(WebViewActivity::class.java) {
+		override fun getActivityIntent(): Intent {
+			val intent = Intent(getInstrumentation().targetContext,WebViewActivity::class.java)
+			return intent
+		}
+	}
+	@Before
+	fun setUp() {
+		//从Activity中获取延迟操作对象
+		mIdlingResource=mActivityTestRule.activity.getIdlingResource()
+		//注册空闲资源－便于网络请求等耗时操作阻塞线程，进行单元测试
+		if(mIdlingResource!=null)IdlingRegistry.getInstance().register(mIdlingResource)
+	}
+	@After
+	fun unregisterIdlingResource(){
+		//注销延迟操作对象
+		if(mIdlingResource!=null)IdlingRegistry.getInstance().unregister(mIdlingResource)
+	}
+	/**
+	 * 验证文本
+	 */
+	@Test
+	fun WEBVIEW_2() {
+		with(mActivityTestRule.activity){
+			//清除文本
+			TWebView.clear_text("id","text_input")
+			//输入新文本
+			TWebView.input_text("id","text_input","Raleigh")
+			//点击按钮
+			TWebView.click("id","changeTextBtn")
+			//验证显示文字
+			TWebView.check_text("id","message","Raleigh")
+			//验证跳转的url
+			TWebView.check_url("id","changeTextBtn","http://xxxl")
+		}
+	}
+
 }

@@ -126,4 +126,31 @@ public class SystemCode extends BaseCode {
                     +TABS_LINE+"TScreenshot.save_bitmap(TScreenshot.take_screenshot(this),%s)"+END_LINE;
         return String.format(format,procedureName, Config.TAKE_SCREENSHOT);
     }
+
+    /**
+     * 关闭wifi
+     */
+    public static String disableWifi(String procedureName) {
+        String format="";
+        if(Config.TEST_CLASS_SUFFIX.equals(Config.TEST_CLASS_SUFFIX_JAVA))
+            format=TABS_LINE+"//%s"+END_LINE
+                    +TABS_LINE+"TSystem.disableWifi(mActivityTestRule.getActivity())"+END_LINE;
+        else
+            format=TABS_LINE+"//%s"+END_LINE
+                    +TABS_LINE+"TSystem.disableWifi(this)"+END_LINE;
+        return String.format(format,procedureName);
+    }
+    /**
+     * 打开wifi
+     */
+    public static String enableWifi(String procedureName) {
+        String format="";
+        if(Config.TEST_CLASS_SUFFIX.equals(Config.TEST_CLASS_SUFFIX_JAVA))
+            format=TABS_LINE+"//%s"+END_LINE
+                    +TABS_LINE+"TSystem.enableWifi(mActivityTestRule.getActivity())"+END_LINE;
+        else
+            format=TABS_LINE+"//%s"+END_LINE
+                    +TABS_LINE+"TSystem.enableWifi(this)"+END_LINE;
+        return String.format(format,procedureName);
+    }
 }

@@ -18,7 +18,6 @@ public class Config {
     public static final String TABS_LINE="\t";//制表符
     public static final String TAKE_SCREENSHOT="Environment.getExternalStorageDirectory().getPath()+\"/takeScreenshot/\"";
     public static final int MODULE_FIRST_ROW =2;//模块名称英文头部第一行,英文行
-    public static final int CASE_FIRST_ROW =5;//用例名称英文头部第一行,英文行
     public static final String UNIT_PACKAGE_NAME="/unit";
     /***********************过滤 配置 sheet名**************************/
     public static final String[] FILTER_SHEET_NAMES={"config","params","demo"};
@@ -30,5 +29,4 @@ public class Config {
     //文件后缀
     public static String TEST_CLASS_SUFFIX=TEST_CLASS_SUFFIX_JAVA;
     public static String END_LINE=END_LINE_JAVA;//换行符
-
 }

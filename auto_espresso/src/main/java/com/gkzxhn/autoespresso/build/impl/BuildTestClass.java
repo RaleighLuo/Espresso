@@ -1,11 +1,14 @@
 package com.gkzxhn.autoespresso.build.impl;
 
+import android.content.SharedPreferences;
+
 import com.gkzxhn.autoespresso.build.IBuildTestClass;
 import com.gkzxhn.autoespresso.build.IBuildTestMethod;
 import com.gkzxhn.autoespresso.code.PermissionCode;
 import com.gkzxhn.autoespresso.config.ClassConfig;
 import com.gkzxhn.autoespresso.config.Config;
 import com.gkzxhn.autoespresso.config.TableConfig;
+import com.gkzxhn.autoespresso.entity.MergedRegionEntity;
 import com.gkzxhn.autoespresso.entity.ModuleEntity;
 import com.gkzxhn.autoespresso.util.ExcelUtil;
 import com.gkzxhn.autoespresso.util.TUtils;
@@ -16,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -64,22 +68,32 @@ public class BuildTestClass implements IBuildTestClass {
     @Override
     public void build() {
         if(mModuleColNames.size()>0) {
-            int firstRow = Config.CASE_FIRST_ROW;
-            int lastRow = mMaxRow;
-
             String classname=getValue(TableConfig.CLASS_NAME);
             boolean isCreate=TUtils.valueToBoolean(getValue(TableConfig.IS_CREATE));
             //测试类名不能为空
             if(isCreate&&classname.length()>0) {
                 header = new ModuleEntity();
-                header.setModuleNumber(getValue(TableConfig.MODULE_NUMBER));
+                //获取ModuleNumber 合并的单元格
+                MergedRegionEntity moduleNumber = ExcelUtil.isMergedRegion(mSheet, mRow,mModuleColNames.get(TableConfig.MODULE_NUMBER));
+                int firstRow=mRow+2;
+                if(moduleNumber!=null&&moduleNumber.isMergedRegion()){
+                    firstRow = moduleNumber.getLastRow()+2;
+                    header.setModuleNumber(moduleNumber.getValue());
+                    header.setFirstRow(moduleNumber.getFirstRow());
+                    header.setLastRow(moduleNumber.getLastRow());
+                }else{
+                    header.setModuleNumber(getValue(TableConfig.MODULE_NUMBER));
+                    header.setFirstRow(mRow);
+                    header.setLastRow(mRow);
+                }
+                int lastRow = mMaxRow;
+
                 header.setModuleName(getValue(TableConfig.MODULE_NAME));
                 header.setClassName(classname);
-                header.setIntentExtra(getValue(TableConfig.INTENT_EXTRA));
                 header.setClassPackageName(getValue(TableConfig.CLASS_PACKAGE_NAME));
-                header.setPremissions(getValue(TableConfig.PREMISSIONS));
+                header.setSharedPreferencesName(getValue(TableConfig.SHAREDPREFERENCES_NAME));
                 createFile();
-                mBuildTestMethod.init(mSheet,header.getModuleNumber(), firstRow, lastRow);
+                mBuildTestMethod.init(mSheet, header.getModuleNumber(),firstRow, lastRow);
                 String classContent = mBuildTestMethod.build();
                 write(classContent);
             }
@@ -132,17 +146,14 @@ public class BuildTestClass implements IBuildTestClass {
             //头部注视
             sb.append(ClassConfig.getHeaders(header.getModuleName()+" " +header.getModuleNumber()));
             //创建类
-            sb.append(ClassConfig.getClassModule(mClassName,header.getClassName(),header.getIntentExtra()));
+            sb.append(ClassConfig.getClassModule(mClassName,header.getClassName(),getIntent()));
 
-            String permissions="";
-            //所需权限
-            if(header.getPremissions()!=null&&!header.getPremissions().isEmpty()){
-                String[] permissionArray=header.getPremissions().split(";");
-                permissions= PermissionCode.get_permission_shell(permissionArray);
-            }
 
+            /***********************所需权限*********************************/
+
+            /********************************************************/
             //before method
-            sb.append(ClassConfig.getBeforeMethod(permissions));
+            sb.append(ClassConfig.getBeforeMethod(getPermissions(),header.getSharedPreferencesName(),getSharedPreferences()));
             //after method
             sb.append(ClassConfig.getAfterMethod());
             BufferedWriter writer = new BufferedWriter(new FileWriter(file,true));
@@ -154,6 +165,57 @@ public class BuildTestClass implements IBuildTestClass {
             e.printStackTrace();
         }
 
+    }
+    /**所需权限
+     * @return
+     */
+    private String getIntent(){
+        StringBuffer extras=new StringBuffer();
+        int col=mModuleColNames.get(TableConfig.INTENT_EXTRA);
+        for(int row=header.getFirstRow();row<=header.getLastRow();row++){
+            String putExtra= ExcelUtil.getCellValue(mSheet,row,col);
+            if(putExtra.length()>0){
+                String key=ExcelUtil.getCellValue(mSheet,row,col+1);
+                String value=ExcelUtil.getCellValue(mSheet,row,col+2);
+                extras.append(PermissionCode.getIntentExtras(putExtra,key,value));
+            }
+        }
+        return  extras.toString();
+    }
+
+    /**所需权限
+     * @return
+     */
+    private String getSharedPreferences(){
+        StringBuffer mSharedPreferences=new StringBuffer();
+        int col=mModuleColNames.get(TableConfig.SHAREDPREFERENCES);
+        for(int row=header.getFirstRow();row<=header.getLastRow();row++){
+            String putExtra= ExcelUtil.getCellValue(mSheet,row,col);
+            if(putExtra.length()>0){
+                String extra="";
+                String key=ExcelUtil.getCellValue(mSheet,row,col+1);
+                String value=ExcelUtil.getCellValue(mSheet,row,col+2);
+                mSharedPreferences.append(PermissionCode.getSharedpreference(putExtra,key,value));
+            }
+        }
+        return  mSharedPreferences.toString();
+    }
+    /**所需权限
+     * @return
+     */
+    private String getPermissions(){
+        String permissions="";
+        List<String> permissionArray= new ArrayList();
+        for(int row=header.getFirstRow();row<=header.getLastRow();row++){
+            String permission= ExcelUtil.getCellValue(mSheet,row,mModuleColNames.get(TableConfig.PREMISSIONS));
+            if(permission.length()>0)permissionArray.add(permission);
+        }
+        if(permissionArray.size()>0){
+            String[] a=new String[permissionArray.size()];
+            permissionArray.toArray(a);
+            permissions= PermissionCode.getPermissionShell(a);
+        }
+        return  permissions;
     }
 
 }

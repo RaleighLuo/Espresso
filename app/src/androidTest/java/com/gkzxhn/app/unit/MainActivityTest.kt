@@ -22,9 +22,11 @@ import android.provider.MediaStore
 import android.support.test.InstrumentationRegistry
 import android.os.Environment
 import android.view.Gravity
+import android.content.Context
+import android.content.SharedPreferences
 
-/** 主页 APP_Main
- * Created by Raleigh.Luo on 2018/03/20 14:30:55.
+/** 主页 MAIN
+ * Created by Raleigh.Luo on 2018/06/12 11:41:47.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -55,7 +57,7 @@ class MainActivityTest {
 	 * 验证文本
 	 */
 	@Test
-	fun APP_Main_001() {
+	fun MAIN_2() {
 		with(mActivityTestRule.activity){
 			//验证开始文字包含Hello
 			TView.check_id_contains_text(R.id.et_text,"Hello")
@@ -69,7 +71,7 @@ class MainActivityTest {
 	 * 验证页面关闭
 	 */
 	@Test
-	fun APP_Main_002() {
+	fun MAIN_8() {
 		with(mActivityTestRule.activity){
 			//点击关闭按钮
 			TView.click_id(R.id.btn_finished)
@@ -78,40 +80,4 @@ class MainActivityTest {
 		}
 	}
 
-	/**
-	 * 验证页面关闭
-	 */
-	@Test
-	fun APP_Main_003() {
-		with(mActivityTestRule.activity){
-			TIntent.intercept_classname("com.gkzxhn.app.SecondActivity",null);
-			//点击关闭按钮
-			TView.click_id(R.id.btn_second)
-			//验证页面已关闭
-			TIntent.verify_classname("com.gkzxhn.app.SecondActivity");
-		}
-	}
-	/**
-	 * 验证页面关闭
-	 */
-	@Test
-	fun APP_Main_004() {
-		with(mActivityTestRule.activity){
-			TIntent.intercept_classname("com.gkzxhn.app.ThreedActivity",Instrumentation.ActivityResult(Activity.RESULT_OK,null))
-			//点击关闭按钮
-			TView.click_id(R.id.btn_three)
-			//验证页面已关闭
-			TIntent.verify_classname("com.gkzxhn.app.ThreedActivity")
-		}
-	}
-	@Test
-	fun APP_Main_005() {
-		with(mActivityTestRule.activity){
-			TIntent.intercept_classname("com.gkzxhn.app.ThreedActivity",Instrumentation.ActivityResult(Activity.RESULT_OK,null))
-			//点击关闭按钮
-			TView.click_id(R.id.btn_three)
-			//验证页面已关闭
-			TIntent.verify_classname("com.gkzxhn.app.ThreedActivity")
-		}
-	}
 }

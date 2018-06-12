@@ -132,11 +132,13 @@ public class TUtils {
         boolean result=false;
         try{
             switch (value){
+                case "1":
                 case "true":
                 case "Y":{
                     result=true;
                     break;
                 }
+                case "0":
                 case "false":
                 case "N":{
                     result=false;

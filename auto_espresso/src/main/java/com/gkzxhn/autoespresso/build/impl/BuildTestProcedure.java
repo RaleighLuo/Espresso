@@ -54,10 +54,13 @@ public class BuildTestProcedure implements IBuildTestProcedure {
             ArrayList<String> params=new ArrayList<>();
             int paramIndex=mColNameMaps.get(TableConfig.ACTION)+1;
             String paramName=ExcelUtil.getCellValue(mSheet,mRow,paramIndex);//参数名
-            while(paramIndex<=mColNameMaps.get(TableConfig.PARAM)&& isNotEmptyParam(paramName)){
-                params.add(ExcelUtil.getCellValue(mSheet,mRow + 1, paramIndex));//参数值
+            while(paramIndex<=mColNameMaps.get(TableConfig.PARAM) ){
+                if(isNotEmptyParam(paramName)) {
+                    params.add(ExcelUtil.getCellValue(mSheet, mRow + 1, paramIndex));//参数值
+
+                }
                 paramIndex++;
-                paramName=ExcelUtil.getCellValue(mSheet,mRow, paramIndex);//参数名
+                paramName = ExcelUtil.getCellValue(mSheet, mRow, paramIndex);//参数名
             }
             mProcedureEntity.setTestingProcedure(getValue(TableConfig.TESTING_PROCEDURE));
             mProcedureEntity.setViewType( getValue(TableConfig.VIEW_TYPE));

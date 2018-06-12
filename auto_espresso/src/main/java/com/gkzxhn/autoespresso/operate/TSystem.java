@@ -1,7 +1,10 @@
 package com.gkzxhn.autoespresso.operate;
 
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -74,4 +77,28 @@ public class TSystem {
     public static void check_changing_configurations(Activity activity){
         assertThat(activity.isChangingConfigurations(),is(true));
     }
+    /**
+     * 打开wifi
+     */
+    public static void enableWifi(Activity activity){
+        TPermissions.get_permission_shell(Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.CHANGE_WIFI_STATE,Manifest.permission.WAKE_LOCK);
+        WifiManager wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (!wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(true);
+        }
+    }
+    /**
+     * 关闭wifi
+     */
+    public static void disableWifi(Activity activity){
+        TPermissions.get_permission_shell(Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.CHANGE_WIFI_STATE,Manifest.permission.WAKE_LOCK);
+        WifiManager wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(false);
+        }
+    }
+
+
 }

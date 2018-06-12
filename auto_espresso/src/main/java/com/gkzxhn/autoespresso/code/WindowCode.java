@@ -74,7 +74,22 @@ public class WindowCode extends BaseCode {
                     +TABS_LINE+"TWindow.toast_check_text(this,\"%s\")"+END_LINE;
         return String.format(format,procedureName,text);
     }
-
+    /**
+     * 验证Toast  自定义Toast
+     * @param procedureName
+     * @param text
+     * @return
+     */
+    public static String toast_check_id_text(String procedureName,String id,String text) {
+        String format="";
+        if(Config.TEST_CLASS_SUFFIX.equals(Config.TEST_CLASS_SUFFIX_JAVA))
+            format=TABS_LINE+"//%s"+END_LINE
+                    +TABS_LINE+"TWindow.toast_check_id_text(mActivityTestRule.getActivity(),%s,\"%s\")"+END_LINE;
+        else
+            format=TABS_LINE+"//%s"+END_LINE
+                    +TABS_LINE+"TWindow.toast_check_id_text(this,%s,\"%s\")"+END_LINE;
+        return String.format(format,procedureName,id,text);
+    }
     /**验证Toast 不是指定文字
      * @param procedureName
      * @param text

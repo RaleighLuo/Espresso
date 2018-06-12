@@ -50,7 +50,9 @@ public class BuildTestMethod implements IBuildTestMethod {
             String isExcute=getValue(TableConfig.IS_EXECUTE);//是否执行
             String caseNumber=getValue(TableConfig.CASE_NUMBER);
             if(caseNumber.length()>0&&isExcute.equals("Y")){//用例编号必须有
-                sb.append(writeMethod(caseNumber,getValue(TableConfig.CASE_NAME)
+                //方法名 组合形式
+                String methodName=String.format("%s_%s",mModuleNumber,caseNumber);
+                sb.append(writeMethod(methodName,getValue(TableConfig.CASE_NAME)
                         ,null));
                 mBuildTestProcedure.init(mSheet,mColNameMaps,firstRow,lastRow);
                 sb.append(mBuildTestProcedure.build());

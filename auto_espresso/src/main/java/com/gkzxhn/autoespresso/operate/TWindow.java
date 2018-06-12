@@ -58,6 +58,15 @@ public class TWindow {
           onView(withText(toastText)).inRoot(withDecorView(not(activity.getWindow().getDecorView()))).check(matches(isDisplayed()));
         //显示：isDisplayed() 不显示：doesNotExist()
     }
+
+    /**验证自定义Toast 根据id
+     * @param activity
+     * @param toastText
+     */
+    public static void toast_check_id_text(Activity activity, int id, String toastText)  {
+        onView(withId(id)).inRoot(withDecorView(not(activity.getWindow().getDecorView()))).
+                check(matches(allOf(isDisplayed(),withText(toastText))));
+    }
     /**验证Toast 不是指定文字
      * @param activity
      * @param toastText

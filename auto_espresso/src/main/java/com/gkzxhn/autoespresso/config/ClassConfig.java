@@ -46,6 +46,8 @@ public class ClassConfig {
             +"import android.support.test.InstrumentationRegistry"+ Config.END_LINE
             +"import android.os.Environment"+ Config.END_LINE
             +"import android.view.Gravity"+Config.END_LINE
+            +"import android.content.Context"+Config.END_LINE
+            +"import android.content.SharedPreferences"+Config.END_LINE
             ;
 
     /*********************** header ************************/
@@ -114,26 +116,19 @@ public class ClassConfig {
             + Config.TABS_LINE+"}"+ Config.END_LINE;
 
     /**获取类名
-     * @param testClassName 测试雷鸣
+     * @param testClassName 测试
      * @param className
      * @return
      */
-    public static final String  getClassModule(String testClassName,String className,String intentExtra){
-        StringBuffer sb=new StringBuffer();
-        if(intentExtra!=null&&!intentExtra.isEmpty()){
-            String[] extras=intentExtra.split(";");
-            for(String extra: extras){
-                if(!extra.isEmpty()){
-                    sb.append(Config.TABS_LINE+ Config.TABS_LINE+ Config.TABS_LINE+extra+ Config.END_LINE);
-                }
-            }
-        }
+    public static final String  getClassModule(String testClassName,String className,String intentExtras){
+
         if(Config.TEST_CLASS_SUFFIX.equals(Config.TEST_CLASS_SUFFIX_JAVA)){
-            return String.format(CLASS_MODULE_JAVA,testClassName,className,className,className,className,sb.toString());
+            return String.format(CLASS_MODULE_JAVA,testClassName,className,className,className,className,intentExtras);
         }else{
-            return String.format(CLASS_MODULE,testClassName,className,className,className,className,sb.toString());
+            return String.format(CLASS_MODULE,testClassName,className,className,className,className,intentExtras);
         }
     }
+
     /*********************** before Method ************************/
     //params: permissions
     public static final String BEFORE_METHOD = Config.TABS_LINE+"@Before"+ Config.WRAP
@@ -152,13 +147,25 @@ public class ClassConfig {
             + Config.TABS_LINE+ Config.TABS_LINE+"if(mIdlingResource!=null)IdlingRegistry.getInstance().register(mIdlingResource)"+ Config.END_LINE
             +"%s"
             + Config.TABS_LINE+"}"+ Config.WRAP;
-    public static final String  getBeforeMethod(String premission){
+    public static final String  getBeforeMethod(String premissions,String sharedPreferencesName,String sharedPreferences){
         if(Config.TEST_CLASS_SUFFIX.equals(Config.TEST_CLASS_SUFFIX_JAVA)){
-            return String.format(BEFORE_METHOD_JAVA, premission);
+            String db=sharedPreferencesName.isEmpty()?"":String.format(SHAREDPREFERENCES_JAVA,sharedPreferencesName,sharedPreferences);
+            return String.format(BEFORE_METHOD_JAVA, premissions+db);
         }else{
-            return String.format(BEFORE_METHOD,premission );
+            String db=sharedPreferencesName.isEmpty()?"":String.format(SHAREDPREFERENCES,sharedPreferencesName,sharedPreferences);
+            return String.format(BEFORE_METHOD,premissions+db);
         }
     }
+
+    public static final String SHAREDPREFERENCES = Config.TABS_LINE+ Config.TABS_LINE+"//本地存储"+ Config.WRAP
+            + Config.TABS_LINE+ Config.TABS_LINE+"val edit=mActivityTestRule.getActivity().getSharedPreferences(\"%s\",Context.MODE_PRIVATE).edit()"+ Config.END_LINE
+            +"%s"
+            + Config.TABS_LINE+ Config.TABS_LINE+"edit.apply()"+Config.END_LINE;
+
+    public static final String SHAREDPREFERENCES_JAVA = Config.TABS_LINE+ Config.TABS_LINE+"//本地存储"+ Config.WRAP
+            + Config.TABS_LINE+ Config.TABS_LINE+"SharedPreferences.Editor edit=mActivityTestRule.getActivity().getSharedPreferences(\"%s\",Context.MODE_PRIVATE).edit()"+ Config.END_LINE
+            +"%s"
+            + Config.TABS_LINE+ Config.TABS_LINE+"edit.apply()"+Config.END_LINE;
     //params: others
     /*********************** after Method ************************/
     public  static String AFTER_METHOD = Config.TABS_LINE+"@After"+ Config.WRAP
@@ -235,5 +242,6 @@ public class ClassConfig {
             return  String.format(SUITE_CLASS,packageName,sb.toString(),className);
         }
     }
+
 
 }

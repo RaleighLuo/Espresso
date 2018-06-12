@@ -8,6 +8,6 @@ import com.gkzxhn.autoespresso.config.Config;
 
 public class BaseCode {
     protected static final String TABS_LINE= Config.TEST_CLASS_SUFFIX.equals(Config.TEST_CLASS_SUFFIX_JAVA)?
-            Config.TABS_LINE+ Config.TABS_LINE:Config.TABS_LINE+ Config.TABS_LINE+ Config.TABS_LINE;
+            (Config.TABS_LINE+ Config.TABS_LINE):(Config.TABS_LINE+ Config.TABS_LINE+ Config.TABS_LINE);
     protected static final String END_LINE= Config.END_LINE;
 }
