@@ -197,7 +197,7 @@ public class TView {
      * 验证EditTextView控件输入的类型
      */
     public static void check_input_type(int id,int inputType){
-        onView(withInputType(inputType)).check(matches(withId(id)));
+        onView(withId(id)).check(matches(withInputType(inputType)));
     }
 
     /**
