@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.InputType;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -155,5 +156,103 @@ public class TUtils {
         return result;
 
     }
-
+    public static int getInputType(String inputType){
+        int mInputType=0;
+        switch (inputType){
+            case "text":
+                mInputType= InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_NORMAL;
+                break;
+            case "textCapCharacters":
+                mInputType=InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+                break;
+            case "textCapWords":
+                mInputType=InputType. TYPE_TEXT_FLAG_CAP_WORDS;
+                break;
+            case "textCapSentences":
+                mInputType=InputType. TYPE_TEXT_FLAG_CAP_SENTENCES;
+                break;
+            case "textAutoCorrect":
+                mInputType=InputType. TYPE_TEXT_FLAG_AUTO_CORRECT;
+                break;
+            case "textAutoComplete":
+                mInputType=InputType. TYPE_TEXT_FLAG_AUTO_COMPLETE;
+                break;
+            case "textMultiLine":
+                mInputType=InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+                break;
+            case "textImeMultiLine":
+                mInputType=InputType. TYPE_TEXT_FLAG_IME_MULTI_LINE;
+                break;
+            case "textNoSuggestions":
+                mInputType=InputType. TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+                break;
+            case "textUri":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI;
+                break;
+            case "textEmailAddress":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+                break;
+            case "textEmailSubject":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT;
+                break;
+            case "textShortMessage":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE;
+                break;
+            case "textLongMessage":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE;
+                break;
+            case "textPersonName":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME;
+                break;
+            case "textPostalAddress":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS;
+                break;
+            case "textPassword":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                break;
+            case "textVisiblePassword":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+                break;
+            case "textWebEditText":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT;
+                break;
+            case "textFilter":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_FILTER;
+                break;
+            case "textPhonetic":
+                mInputType=InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PHONETIC;
+                break;
+            case "textWebEmailAddress":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS;
+                break;
+            case "textWebPassword":
+                mInputType=InputType. TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
+                break;
+            case "number":
+                mInputType=InputType. TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL;
+                break;
+            case "numberSigned":
+                mInputType=InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED;
+                break;
+            case "numberDecimal":
+                mInputType=InputType. TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL;
+                break;
+            case "numberPassword":
+                mInputType=InputType. TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                break;
+            case "phone":
+                mInputType=InputType.TYPE_CLASS_PHONE;
+                break;
+            case "datetime":
+                mInputType=InputType. TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_NORMAL;
+                break;
+            case "date":
+                mInputType=InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE;
+                break;
+            case "time":
+                mInputType=InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_TIME;
+                break;
+        }
+        return mInputType;
+    }
 }

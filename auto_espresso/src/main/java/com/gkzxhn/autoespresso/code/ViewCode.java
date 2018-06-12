@@ -231,15 +231,16 @@ public class ViewCode extends BaseCode {
      *验证EditTextView控件输入的类型
      * @param procedureName
      * @param id
-     * @param inputType eg: InputType.TYPE_CLASS_PHONE
+     * @param inputType eg: number  ->android:inputType="number"
      * @return
      */
     public static String check_input_type(String procedureName,String id,String inputType) {
 
         String format=TABS_LINE+"//%s"+END_LINE
                 +TABS_LINE+"TView.check_input_type(%s,%s)"+END_LINE;
-        return String.format(format,procedureName,id,inputType);
+        return String.format(format,procedureName,id,TUtils.getInputType(inputType));
     }
+
     /**
      *下滑
      * @param procedureName
@@ -350,4 +351,7 @@ public class ViewCode extends BaseCode {
         return String.format(format,procedureName,id,TUtils.valueToInt(hours),
                 TUtils.valueToInt(minutes));
     }
+
+
+
 }
