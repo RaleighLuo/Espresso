@@ -78,6 +78,16 @@ public class TSystem {
         assertThat(activity.isChangingConfigurations(),is(true));
     }
     /**
+     * 延迟
+     */
+    public static void sleep(long time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
      * 打开wifi
      */
     public static void enableWifi(Activity activity){

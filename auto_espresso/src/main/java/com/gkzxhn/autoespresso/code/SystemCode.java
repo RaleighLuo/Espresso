@@ -96,7 +96,16 @@ public class SystemCode extends BaseCode {
                     +TABS_LINE+"TSystem.check_destroyed(this)"+END_LINE;
         return String.format(format,procedureName);
     }
-
+    /**
+     * 延迟
+     * @param procedureName
+     * @return
+     */
+    public static String sleep(String procedureName,long time) {
+        String format=TABS_LINE+"//%s"+END_LINE
+                +TABS_LINE+"TSystem.sleep(%s)"+END_LINE;
+        return String.format(format,procedureName,time);
+    }
     /**
      * 验证Activity是否横竖屏切换
      * @param procedureName
