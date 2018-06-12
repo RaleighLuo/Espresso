@@ -27,11 +27,10 @@ public interface TableConfig {//表头
     String[] CASE_HEADERS ={CASE_NUMBER
     ,CASE_NAME, IS_EXECUTE,TESTING_PROCEDURE,VIEW_TYPE, ACTION,
             PARAM};
+    //数据存储／传值格式
     String PUT_STRING="putString";
     String PUT_INT="putInt";
     String PUT_BOOLEAN="putBoolean";
     String PUT_FLOAT="putFloat";
     String PUT_LONG="putLong";
-    //数据存储／传值格式
-    String[] EXTRA_FORMAT ={PUT_STRING,PUT_INT,PUT_BOOLEAN,PUT_FLOAT,PUT_LONG};
 }

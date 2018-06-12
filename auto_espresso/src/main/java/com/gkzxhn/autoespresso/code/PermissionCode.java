@@ -47,16 +47,16 @@ public class PermissionCode extends BaseCode {
                     extra = String.format("edit.%s(\"%s\",\"%s\")", putExtra, key, value);
                     break;
                 case TableConfig.PUT_BOOLEAN:
-                    extra = String.format("edit.%s(\"%s\",%s)", putExtra, key, value.isEmpty()?false:value);
-                    break;
-                case TableConfig.PUT_INT:
-                    extra = String.format("edit.%s(\"%s\",%s)", putExtra, key, value.isEmpty()?0:value);
+                    extra = String.format("edit.%s(\"%s\",%s)", putExtra, key, value.length()==0?false:value);
                     break;
                 case TableConfig.PUT_FLOAT:
-                    extra = String.format("edit.%s(\"%s\",%sf)", putExtra, key, value.isEmpty()?0:value);
+                    extra = String.format("edit.%s(\"%s\",%sf)", putExtra, key, value.length()==0?0:value);
                     break;
                 case TableConfig.PUT_LONG:
-                    extra = String.format("edit.%s(\"%s\",%sL)", putExtra, key, value.isEmpty()?0:value);
+                    extra = String.format("edit.%s(\"%s\",%sL)", putExtra, key, value.length()==0?0:value);
+                    break;
+                default:
+                    extra = String.format("edit.%s(\"%s\",%s)", putExtra, key, value.length()==0?0:value);
                     break;
             }
             extra = Config.TABS_LINE + Config.TABS_LINE + extra + Config.END_LINE;
@@ -76,17 +76,18 @@ public class PermissionCode extends BaseCode {
                     extra = String.format("intent.putExtra(\"%s\",\"%s\")", key, value);
                     break;
                 case TableConfig.PUT_BOOLEAN:
-                    extra = String.format("edit.%s(\"%s\",%s)", putExtra, key, value.isEmpty()?false:value);
-                    break;
-                case TableConfig.PUT_INT:
-                    extra = String.format("intent.putExtra(\"%s\",%s)", key, value.isEmpty()?0:value);
+                    extra = String.format("edit.%s(\"%s\",%s)", putExtra, key, value.length()==0?false:value);
                     break;
                 case TableConfig.PUT_FLOAT:
-                    extra = String.format("intent.putExtra(\"%s\",%sf)", key, value.isEmpty()?0:value);
+                    extra = String.format("intent.putExtra(\"%s\",%sf)", key, value.length()==0?0:value);
                     break;
                 case TableConfig.PUT_LONG:
-                    extra = String.format("intent.putExtra(\"%s\",%sL)", key, value.isEmpty()?0:value);
+                    extra = String.format("intent.putExtra(\"%s\",%sL)", key, value.length()==0?0:value);
                     break;
+                default:
+                    extra = String.format("intent.putExtra(\"%s\",%s)", key, value.length()==0?0:value);
+                    break;
+
             }
             extra = Config.TABS_LINE + Config.TABS_LINE + Config.TABS_LINE + extra + Config.END_LINE;
         }
