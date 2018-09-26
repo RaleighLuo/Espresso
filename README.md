@@ -75,13 +75,21 @@ Spinner选择了指定文本 spinner_select_text
 System
 
 点击系统返回键 press_back 
+
 点击系统菜单键 press_menu_key 
+
 点击软键盘action键 press_ime_action_key 
+
 点击指定键 press_key 
+
 点击菜单项 navigate_to_menu_id 
+
 验证Activity是否Finished check_finished 
+
 验证Activity是否Destroyed check_destroyed 
+
 验证Activity是否横竖屏切换 check_changing_configurations 
+
 截屏 take_screenshot
 
 Intent
