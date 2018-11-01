@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.gkzxhn.app"
         minSdkVersion 14
@@ -13,10 +13,6 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-    }
-    //单元测试类库类库中 读取excel的poi第三方库重复打包了META-INF的问题
-    packagingOptions {
-        exclude 'META-INF/*'
     }
     buildTypes {
         release {

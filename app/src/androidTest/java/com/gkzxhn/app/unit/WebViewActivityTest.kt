@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /** 网页 WEBVIEW
- * Created by Raleigh.Luo on 2018/06/12 11:41:47.
+ * Created by Raleigh.Luo on 2018/11/01 18:07:34.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -57,10 +57,10 @@ class WebViewActivityTest {
 	 * 验证文本
 	 */
 	@Test
-	fun WEBVIEW_2() {
+	fun WEBVIEW_002() {
 		with(mActivityTestRule.activity){
 			//清除文本
-			TWebView.clear_text("id","text_input")
+			TWebView.clear_text("id"," text_input")
 			//输入新文本
 			TWebView.input_text("id","text_input","Raleigh")
 			//点击按钮

@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /** 主页 MAIN
- * Created by Raleigh.Luo on 2018/06/12 11:41:47.
+ * Created by Raleigh.Luo on 2018/11/01 18:07:34.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -38,6 +38,8 @@ class MainActivityTest {
 	val mActivityTestRule: IntentsTestRule<MainActivity> = object : IntentsTestRule<MainActivity>(MainActivity::class.java) {
 		override fun getActivityIntent(): Intent {
 			val intent = Intent(getInstrumentation().targetContext,MainActivity::class.java)
+			intent.putExtra("id","22")
+			intent.putExtra("action",1)
 			return intent
 		}
 	}
@@ -47,6 +49,10 @@ class MainActivityTest {
 		mIdlingResource=mActivityTestRule.activity.getIdlingResource()
 		//注册空闲资源－便于网络请求等耗时操作阻塞线程，进行单元测试
 		if(mIdlingResource!=null)IdlingRegistry.getInstance().register(mIdlingResource)
+		//本地存储
+		val edit=mActivityTestRule.getActivity().getSharedPreferences("UserTable",Context.MODE_PRIVATE).edit()
+		edit.putString("id","1")
+		edit.apply()
 	}
 	@After
 	fun unregisterIdlingResource(){
@@ -57,7 +63,7 @@ class MainActivityTest {
 	 * 验证文本
 	 */
 	@Test
-	fun MAIN_2() {
+	fun MAIN_002() {
 		with(mActivityTestRule.activity){
 			//验证开始文字包含Hello
 			TView.check_id_contains_text(R.id.et_text,"Hello")
@@ -71,7 +77,7 @@ class MainActivityTest {
 	 * 验证页面关闭
 	 */
 	@Test
-	fun MAIN_8() {
+	fun MAIN_008() {
 		with(mActivityTestRule.activity){
 			//点击关闭按钮
 			TView.click_id(R.id.btn_finished)

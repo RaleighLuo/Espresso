@@ -8,12 +8,14 @@ import com.gkzxhn.autoespresso.config.TableConfig;
 import com.gkzxhn.autoespresso.entity.MergedRegionEntity;
 import com.gkzxhn.autoespresso.util.ExcelUtil;
 
-import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import jxl.Cell;
+import jxl.Sheet;
 
 /**
  * Created by Raleigh.Luo on 18/3/7.
@@ -83,17 +85,18 @@ public class BuildTestMethod implements IBuildTestMethod {
     public void readHeaderNames(int row) {
         mColNameMaps.clear();
         List headers= Arrays.asList(TableConfig.CASE_HEADERS);
-        int maxCol=mSheet.getRow(row).getLastCellNum();
+        int maxCol=mSheet.getRow(row).length-1;
         for(int col=0;col<maxCol;col++){
-            String value= ExcelUtil.getCellValue(mSheet,row,col);
+            String value=mSheet.getRow(row)[col].getContents();
             if (headers.contains(value)) {
                 mColNameMaps.put(value, col);
             }
         }
     }
-
     private String getValue(String headername){
-        return ExcelUtil.getCellValue(mSheet,mRow,mColNameMaps.get(headername));
+        Cell[] cells = mSheet.getRow(mRow);
+        return cells[mColNameMaps.get(headername)].getContents();
     }
+
 
 }

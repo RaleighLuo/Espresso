@@ -1,6 +1,5 @@
 package com.gkzxhn.autoespresso.build.impl;
 
-import android.content.SharedPreferences;
 
 import com.gkzxhn.autoespresso.build.IBuildTestClass;
 import com.gkzxhn.autoespresso.build.IBuildTestMethod;
@@ -13,7 +12,6 @@ import com.gkzxhn.autoespresso.entity.ModuleEntity;
 import com.gkzxhn.autoespresso.util.ExcelUtil;
 import com.gkzxhn.autoespresso.util.TUtils;
 
-import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,6 +22,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import jxl.Cell;
+import jxl.Sheet;
 
 /**
  * Created by Raleigh.Luo on 18/3/7.
@@ -41,13 +42,13 @@ public class BuildTestClass implements IBuildTestClass {
     private  Sheet mSheet;
     private int mMaxRow=0;
     @Override
-    public void init(String driverFilePath,String packagename, String testClassDir,  int sheetIndex) {
+    public void init(String driverFilePath,String packagename, String testClassDir,  Sheet sheet) {
         mPackageName=packagename;
         mTestClassPath=testClassDir;
         File file=new File(driverFilePath);
-        mSheet=ExcelUtil.getSheet(file,sheetIndex);
+        mSheet=sheet;
         mRow= Config.MODULE_FIRST_ROW;
-        mMaxRow=mSheet.getPhysicalNumberOfRows();
+        mMaxRow=mSheet.getRows();
         //读取Module Name
         readModuleNames();
         mRow++;//Module Value行
@@ -56,9 +57,9 @@ public class BuildTestClass implements IBuildTestClass {
     @Override
     public void readModuleNames() {
         List headers=Arrays.asList(TableConfig.MODULE_HEADERS);
-        int maxCol=mSheet.getRow(mRow).getLastCellNum();
-        for (int col = 0; col < maxCol; col++) {
-            String value = ExcelUtil.getCellValue(mSheet, mRow, col);
+        Cell[] cells = mSheet.getRow(mRow);
+        for (int col = 0; col < cells.length; col++) {
+            String value = cells[col].getContents();
             if (headers.contains(value)) {
                 mModuleColNames.put(value, col);
             }
@@ -102,7 +103,8 @@ public class BuildTestClass implements IBuildTestClass {
 
 
     private String getValue(String headername){
-        return ExcelUtil.getCellValue(mSheet,mRow,mModuleColNames.get(headername));
+        Cell[] cells = mSheet.getRow(mRow);
+        return cells[mModuleColNames.get(headername)].getContents();
     }
 
     @Override
@@ -173,10 +175,11 @@ public class BuildTestClass implements IBuildTestClass {
         StringBuffer extras=new StringBuffer();
         int col=mModuleColNames.get(TableConfig.INTENT_EXTRA);
         for(int row=header.getFirstRow();row<=header.getLastRow();row++){
-            String putExtra= ExcelUtil.getCellValue(mSheet,row,col);
+
+            String putExtra= mSheet.getRow(row)[col].getContents();
             if(putExtra.length()>0){
-                String key=ExcelUtil.getCellValue(mSheet,row,col+1);
-                String value=ExcelUtil.getCellValue(mSheet,row,col+2);
+                String key=mSheet.getRow(row)[col+1].getContents();
+                String value=mSheet.getRow(row)[col+2].getContents();
                 extras.append(PermissionCode.getIntentExtras(putExtra,key,value));
             }
         }
@@ -190,11 +193,11 @@ public class BuildTestClass implements IBuildTestClass {
         StringBuffer mSharedPreferences=new StringBuffer();
         int col=mModuleColNames.get(TableConfig.SHAREDPREFERENCES);
         for(int row=header.getFirstRow();row<=header.getLastRow();row++){
-            String putExtra= ExcelUtil.getCellValue(mSheet,row,col);
+            String putExtra= mSheet.getRow(row)[col].getContents();
             if(putExtra.length()>0){
                 String extra="";
-                String key=ExcelUtil.getCellValue(mSheet,row,col+1);
-                String value=ExcelUtil.getCellValue(mSheet,row,col+2);
+                String key=mSheet.getRow(row)[col+1].getContents();
+                String value=mSheet.getRow(row)[col+2].getContents();
                 mSharedPreferences.append(PermissionCode.getSharedpreference(putExtra,key,value));
             }
         }
@@ -207,7 +210,7 @@ public class BuildTestClass implements IBuildTestClass {
         String permissions="";
         List<String> permissionArray= new ArrayList();
         for(int row=header.getFirstRow();row<=header.getLastRow();row++){
-            String permission= ExcelUtil.getCellValue(mSheet,row,mModuleColNames.get(TableConfig.PREMISSIONS));
+            String permission= mSheet.getRow(row)[mModuleColNames.get(TableConfig.PREMISSIONS)].getContents();
             if(permission.length()>0)permissionArray.add(permission);
         }
         if(permissionArray.size()>0){

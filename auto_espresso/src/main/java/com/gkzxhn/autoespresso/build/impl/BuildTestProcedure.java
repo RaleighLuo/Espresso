@@ -16,11 +16,13 @@ import com.gkzxhn.autoespresso.entity.ProcedureEntity;
 import com.gkzxhn.autoespresso.util.ExcelUtil;
 import com.gkzxhn.autoespresso.util.TUtils;
 
-import org.apache.poi.ss.usermodel.Sheet;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
+
+import jxl.Cell;
+import jxl.Sheet;
 
 /**
  * Created by Raleigh.Luo on 18/3/7.
@@ -53,14 +55,14 @@ public class BuildTestProcedure implements IBuildTestProcedure {
             }
             ArrayList<String> params=new ArrayList<>();
             int paramIndex=mColNameMaps.get(TableConfig.ACTION)+1;
-            String paramName=ExcelUtil.getCellValue(mSheet,mRow,paramIndex);//参数名
+            String paramName=mSheet.getRow(mRow)[paramIndex].getContents();//参数名
             while(paramIndex<=mColNameMaps.get(TableConfig.PARAM) ){
                 if(isNotEmptyParam(paramName)) {
-                    params.add(ExcelUtil.getCellValue(mSheet, mRow + 1, paramIndex));//参数值
+                    params.add(mSheet.getRow(mRow+1)[paramIndex].getContents());//参数值
 
                 }
                 paramIndex++;
-                paramName = ExcelUtil.getCellValue(mSheet, mRow, paramIndex);//参数名
+                paramName =mSheet.getRow(mRow)[paramIndex].getContents();//参数名
             }
             mProcedureEntity.setTestingProcedure(getValue(TableConfig.TESTING_PROCEDURE));
             mProcedureEntity.setViewType( getValue(TableConfig.VIEW_TYPE));
@@ -145,7 +147,8 @@ public class BuildTestProcedure implements IBuildTestProcedure {
     }
 
     private String getValue(String headername){
-        return ExcelUtil.getCellValue(mSheet,mRow,mColNameMaps.get(headername));
+        Cell[] cells = mSheet.getRow(mRow);
+        return cells[mColNameMaps.get(headername)].getContents();
     }
     /**是否不为空
      * @param charaString

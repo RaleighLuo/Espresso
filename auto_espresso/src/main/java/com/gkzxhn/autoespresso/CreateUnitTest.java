@@ -29,6 +29,8 @@ public class CreateUnitTest {
         driver.setDriverFilePath("./auto_espresso/src/main/assets/unit_test_case.xls");
         driver.setPackageName(packageName);
         driver.setUnitPath(unitPath);
+//        ExcelUtil.xls2String(driver.getDriverFilePath());
+
         /*************************执行代码*****************************/
         //读取Sheet
         IReadSheets read=new ReadSheets();
@@ -37,6 +39,6 @@ public class CreateUnitTest {
         read.read(driver,true);
         System.out.print("执行完成！");
         //创建集成测试并执行
-		read.executeAllTest(packageName,unitPath);
+//		read.executeAllTest(packageName,unitPath);
     }
 }

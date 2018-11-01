@@ -1,20 +1,21 @@
 package com.gkzxhn.autoespresso.build.impl;
 
-import android.Manifest;
-
 import com.gkzxhn.autoespresso.build.IBuildTestClass;
 import com.gkzxhn.autoespresso.build.IReadSheets;
 import com.gkzxhn.autoespresso.config.ClassConfig;
 import com.gkzxhn.autoespresso.config.Config;
 import com.gkzxhn.autoespresso.config.TransformLanguage;
 import com.gkzxhn.autoespresso.entity.DriverEntity;
-import com.gkzxhn.autoespresso.util.ExcelUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+
+import jxl.Sheet;
+import jxl.Workbook;
 
 /**读取excel文本中的sheet表
  * Created by Raleigh.Luo on 18/3/7.
@@ -43,17 +44,24 @@ public class ReadSheets implements IReadSheets {
     @Override
     public void read(DriverEntity driver,boolean isClearUnitClassNames) {
         File file =new  File(driver.getDriverFilePath());
-        int sheetsMumber= ExcelUtil.getSheetsNumber(file);
-        //清空模块名称
-        if(isClearUnitClassNames)Config.MODULE_NAMES.clear();
-        for(int sheetIndex=0;sheetIndex<sheetsMumber;sheetIndex++){
-            String sheetname=ExcelUtil.getSheetName(file,sheetIndex);
-            //过滤sheet配置文件
-            if(!Arrays.asList(Config.FILTER_SHEET_NAMES).contains(sheetname)){
-                System.out.println("创建 sheet表 "+sheetname);
-                mBuildTestClass.init(driver.getDriverFilePath(),driver.getPackageName(),driver.getUnitPath(),sheetIndex);
-                mBuildTestClass.build();
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            StringBuilder sb = new StringBuilder();
+            jxl.Workbook rwb = Workbook.getWorkbook(fis);
+            Sheet[] sheets = rwb.getSheets();
+            for (int sheetIndex = 0; sheetIndex < sheets.length; sheetIndex++) {
+                Sheet sheet = rwb.getSheet(sheetIndex);
+                String sheetname=sheet.getName();
+                //过滤sheet配置文件
+                if(!Arrays.asList(Config.FILTER_SHEET_NAMES).contains(sheetname)){
+                    System.out.println("创建 sheet表 "+sheetname);
+                    mBuildTestClass.init(driver.getDriverFilePath(),driver.getPackageName(),driver.getUnitPath(),sheet);
+                    mBuildTestClass.build();
+                }
             }
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
