@@ -14,23 +14,23 @@ public class CreateUnitTest {
     public static void main(String[] args) {
         /*************************配置*****************************/
         //模块名称
-        String moduleName="app";
-
+        String MODULE_NAME="app";
         //包名
-        String packageName="com.gkzxhn.app";
+        String PACKAGE_NAME="com.gkzxhn.app";
+        //单元测试用例文件路径
+        String PATH="./auto_espresso/src/main/assets/unit_test_case.xls";
+        /*************************代码区*****************************/
         //包名路径 .替代/
-        String packagePath=packageName.replace(".","/");
+        String packagePath=PACKAGE_NAME.replace(".","/");
         //相对路径  ./Moduel名/src/androidTest/java/包名/unit
         // 如: ./wisidom/src/androidTest/java/com.xx/unit
         String unitPath=String.format("./%s/src/androidTest/java/%s%s",
-                moduleName,packagePath, Config.UNIT_PACKAGE_NAME);
-
+                MODULE_NAME,packagePath, Config.UNIT_PACKAGE_NAME);
         DriverEntity driver=new DriverEntity();
-        driver.setDriverFilePath("./auto_espresso/src/main/assets/unit_test_case.xls");
-        driver.setPackageName(packageName);
+        driver.setDriverFilePath(PATH);
+        driver.setPackageName(PACKAGE_NAME);
         driver.setUnitPath(unitPath);
 //        ExcelUtil.xls2String(driver.getDriverFilePath());
-
         /*************************执行代码*****************************/
         //读取Sheet
         IReadSheets read=new ReadSheets();
