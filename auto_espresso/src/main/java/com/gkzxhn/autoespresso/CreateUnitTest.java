@@ -39,6 +39,6 @@ public class CreateUnitTest {
         read.read(driver,true);
         System.out.print("执行完成！");
         //创建集成测试并执行
-//		read.executeAllTest(packageName,unitPath);
+//		read.executeAllTest(PACKAGE_NAME,unitPath);
     }
 }
