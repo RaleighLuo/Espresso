@@ -4,27 +4,72 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.annotation.VisibleForTesting
 import android.support.test.espresso.IdlingResource
-import kotlinx.android.synthetic.main.activity_main.*
-
+import android.view.View
+import android.widget.Toast
+import com.gkzxhn.app.adapter.MainAdapter
+import com.gkzxhn.app.adapter.OnItemClickListener
+import kotlinx.android.synthetic.main.activity_main.main_layout_rl_list
+as mRecyclerView
+import kotlinx.android.synthetic.main.activity_main.main_layout_swipeRefresh
+as mSwipeRefreshLayout
 class MainActivity : AppCompatActivity() {
     //自动化测试使用
     private var mIdlingResource: SimpleIdlingResource? = null
+    private lateinit var adapter: MainAdapter
+    private val mHandler:Handler= Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btn_finished.setOnClickListener { finish() }
-        btn_second.setOnClickListener{ startActivity(Intent(this,SecondActivity::class.java)) }
-        btn_three.setOnClickListener {
-            startActivityForResult(Intent(this, ThreedActivity::class.java), Activity.RESULT_OK);
-        }
+        setTitle("Main")
+        adapter = MainAdapter(this)
+        adapter.setOnItemClickListener(onItemClickListener)
+        initData()
+        mRecyclerView.adapter = adapter
+        mSwipeRefreshLayout.setOnRefreshListener {
+            //延迟加载的使用
+            //执行网络请求或耗时操作前，设置等待
+            setIdleNow(false)
+            //执行网络请求等，模拟2秒延迟
+            mHandler.postDelayed(Runnable {
+                // 执行完成，释放为空闲状态，单元测试可继续执行
+                setIdleNow(true)
+                //刷新完成
+                mSwipeRefreshLayout.setRefreshing(false)
+                Toast.makeText(this@MainActivity,  "Refresh Finished", Toast.LENGTH_LONG).show();
 
-        //延迟加载的使用
-//        setIdleNow(false); 执行网络请求或耗时操作前，设置等待
-//        requestHttp(); 执行网络请求
-//        setIdleNow(true); 执行完成，释放为空闲状态，单元测试可继续执行
+            },2000)
+        }
     }
+    fun initData(){
+        var mDatas:ArrayList<String> = ArrayList<String>()
+        mDatas.add("WebView Page")
+        mDatas.add("Second Page")
+        mDatas.add("Three Page")
+        adapter.updateItems(mDatas)
+    }
+    private val onItemClickListener = object : OnItemClickListener {
+        override fun onClickListener(convertView: View, position: Int) {
+            when(position){
+                0 ->{
+                    startActivityForResult(Intent(this@MainActivity, WebViewActivity::class.java), Activity.RESULT_OK);
+
+                }
+                1 ->{
+                    startActivityForResult(Intent(this@MainActivity, SecondActivity::class.java), Activity.RESULT_OK);
+
+                }
+                2 ->{
+                    startActivityForResult(Intent(this@MainActivity, ThreeActivity::class.java), Activity.RESULT_OK);
+                }
+            }
+
+
+        }
+    }
+
     /**
      * Only called from test, creates and returns a new [SimpleIdlingResource].
      */

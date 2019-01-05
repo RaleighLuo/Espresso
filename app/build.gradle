@@ -19,6 +19,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug{
+            //配置测试覆盖率
+            testCoverageEnabled true
+        }
     }
 
 }
@@ -31,4 +35,5 @@ dependencies {
     //单元测试延迟加载类库
     implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
     androidTestImplementation project(':auto_espresso')
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 }

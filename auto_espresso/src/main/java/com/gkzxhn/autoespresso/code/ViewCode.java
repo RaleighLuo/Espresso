@@ -110,6 +110,18 @@ public class ViewCode extends BaseCode {
                 +TABS_LINE+"TView.check_id_text(%s,\"%s\")"+END_LINE;
         return String.format(format,procedureName,id,text);
     }
+    /**
+     * 验证控件错误提示文本
+     * @param procedureName
+     * @param id
+     * @param text
+     * @return
+     */
+    public static String check_id_error_text(String procedureName,String id,String text) {
+        String format=TABS_LINE+"//%s"+END_LINE
+                +TABS_LINE+"TView.check_id_error_text(%s,\"%s\")"+END_LINE;
+        return String.format(format,procedureName,id,text);
+    }
 
     /**
      * 验证控件是否可见

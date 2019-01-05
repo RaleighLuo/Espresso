@@ -1,40 +1,43 @@
 package com.gkzxhn.app
 
-import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.test.espresso.IdlingResource
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import kotlinx.android.synthetic.main.webview_layout.webview_layout_webview
-as mWebView
+import android.widget.Toast
+import kotlinx.android.synthetic.main.login_layout.login_layout_et_username
+as etUsername
+import kotlinx.android.synthetic.main.login_layout.login_layout_et_password
+as etPassword
 
-/**
- * Created by Raleigh.Luo on 18/6/4.
- */
-class WebViewActivity: AppCompatActivity() {
-    protected val WEB_FORM_URL = "file:///android_asset/web_form.html"
+class LoginActivity : AppCompatActivity(){
     //自动化测试使用
     private var mIdlingResource: SimpleIdlingResource? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.webview_layout)
-        setTitle("WebView")
-        mWebView.getSettings().setJavaScriptEnabled(true)
-        mWebView.loadUrl(WEB_FORM_URL)
-        mWebView.requestFocus()
-        mWebView.setWebViewClient(object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                return false
-            }
-        })
+        setContentView(R.layout.login_layout)
+        setTitle("Login")
     }
     fun onClick(v: View){
-        finish()
+        if(v.id==R.id.login_layout_btn_login){
+            if(etUsername.text.length==0){
+                etUsername.error="Please input username!"
+            }else if(etPassword.text.length==0){
+                etPassword.error="Please input password!"
+            }else if(etUsername.text.toString()!="admin"||etPassword.text.toString()!="123456"){
+                Toast.makeText(this,"Error username and password!",Toast.LENGTH_SHORT).show()
+            }else{
+                //登录  跳转到主页
+                startActivity(Intent(this,MainActivity::class.java))
+                finish()
+            }
+        }
     }
 
+    override fun onBackPressed() {
+    }
     /**
      * Only called from test, creates and returns a new [SimpleIdlingResource].
      */
@@ -61,4 +64,5 @@ class WebViewActivity: AppCompatActivity() {
             }
         }
     }
+
 }

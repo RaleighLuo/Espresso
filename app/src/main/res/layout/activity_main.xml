@@ -6,39 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.gkzxhn.app.MainActivity">
-
-    <EditText
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/main_layout_swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
-        android:id="@+id/et_text"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_layout_rl_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finished"
-        android:id="@+id/btn_finished"
-        />
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Second"
-        android:id="@+id/btn_second"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Three"
-        android:id="@+id/btn_three"
-        />
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -26,6 +26,7 @@ import static android.support.test.espresso.contrib.PickerActions.setTime;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasBackground;
+import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
@@ -115,7 +116,13 @@ public class TView {
     public static void check_id_text(int id, String text) {
         onView(withId(id)).check(matches(withText(text)));
     }
-
+    /**检查控件错误提示文本
+     * @param id
+     * @param text
+     */
+    public static void check_id_error_text(int id, String text) {
+        onView(withId(id)).check(matches(hasErrorText(text)));
+    }
     /**验证控件是否可见
      * @param id
      */

@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class SecondActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.second_layout)
+        setTitle("Second")
     }
 }
