@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /** 主页 MAIN
- * Created by Raleigh.Luo on 2019/01/05 16:05:00.
+ * Created by Raleigh.Luo on 2019/01/07 10:57:02.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -88,15 +88,15 @@ class MainActivityTest {
 		}
 	}
 	/**
-	 * 点击第一项
+	 * 验证跳转到Webview
 	 */
 	@Test
 	fun MAIN_010() {
 		with(mActivityTestRule.activity){
-			//点击第一项
-			TRecyclerView.click_item(R.id.main_layout_rl_list,0)
 			//拦截Intent
 			TIntent.intercept_classname("com.gkzxhn.app.WebViewActivity",Instrumentation.ActivityResult(Activity.RESULT_OK,null))
+			//点击第一项
+			TRecyclerView.click_item(R.id.main_layout_rl_list,0)
 			//验证Intent
 			TIntent.verify_classname("com.gkzxhn.app.WebViewActivity")
 		}

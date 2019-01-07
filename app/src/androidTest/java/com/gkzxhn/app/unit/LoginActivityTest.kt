@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /** 登录 LOGIN
- * Created by Raleigh.Luo on 2019/01/05 16:05:00.
+ * Created by Raleigh.Luo on 2019/01/07 10:57:02.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -111,10 +111,10 @@ class LoginActivityTest {
 			TView.input_text(R.id.login_layout_et_username,"admin")
 			//输入空密码
 			TView.input_text(R.id.login_layout_et_password,"123456")
-			//点击登录
-			TView.click_id(R.id.login_layout_btn_login)
 			//拦截Intent
 			TIntent.intercept_classname("com.gkzxhn.app.MainActivity",Instrumentation.ActivityResult( Activity.RESULT_OK,null))
+			//点击登录
+			TView.click_id(R.id.login_layout_btn_login)
 			//验证Intent
 			TIntent.verify_classname("com.gkzxhn.app.MainActivity")
 			//验证登录页面是否Finished
