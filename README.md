@@ -135,6 +135,10 @@ Window
 
 验证Dialog中是否有包含文字 dialog_check_contains_text
 
+点击Dialog中指定文字	dialog_click_text
+
+点击Dialog中包含文字	dialog_click_contains_text
+
 点击Popwindow中的控件 popwindow_click_item
 
 点击Alertwindow中的控件 alertwindow_click_text
