@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /** 登录 LOGIN
- * Created by Raleigh.Luo on 2019/01/07 10:57:02.
+ * Created by Raleigh.Luo on 2019/01/07 12:07:40.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

@@ -38,7 +38,21 @@ public class TWindow {
           onView(withText(containsString(text))).inRoot(RootMatchers.isDialog()).check(matches(isDisplayed()));
         //显示：isDisplayed() 不显示：doesNotExist()
     }
+    /**点击Dialog文字  dialog显示遮住后，底部的页面控件不能检测到
+     * @param text
+     */
+    public static void dialog_click_text(String text)   {
+        onView(withText(text)).inRoot(RootMatchers.isDialog()).perform(click());
+        //显示：isDisplayed() 不显示：doesNotExist()
+    }
 
+    /**点击Dialog包含文字  dialog显示遮住后，底部的页面控件不能检测到
+     * @param text
+     */
+    public static void dialog_click_contains_text(String text)   {
+        onView(withText(containsString(text))).inRoot(RootMatchers.isDialog()).perform(click());
+        //显示：isDisplayed() 不显示：doesNotExist()
+    }
     /**
      * 点击Popwindow中的child 通过childId
      */

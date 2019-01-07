@@ -23,6 +23,7 @@ import static android.support.test.espresso.contrib.RecyclerViewActions.actionOn
 import static android.support.test.espresso.contrib.RecyclerViewActions.scrollTo;
 import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -179,14 +180,14 @@ public class TRecyclerView {
      * 滑动到指定文字项
      */
     public static void scroll_to_text(int recyclerViewId, String text) {
-        onView(allOf(withId(recyclerViewId), isDisplayed())).perform(scrollTo(withText(text)));
+        onView(allOf(withId(recyclerViewId), isDisplayed())).perform(scrollTo(hasDescendant(withText(text))));
     }
 
     /**
      * 点击指定文字项
      */
     public static void click_item_text(int recyclerViewId, String text) {
-        onView(withId(recyclerViewId)).perform(actionOnItem(withText(text), click()));
+        onView(withId(recyclerViewId)).perform(actionOnItem(hasDescendant(withText(text)), click()));
     }
     /**
      * 验证指定项控件文字

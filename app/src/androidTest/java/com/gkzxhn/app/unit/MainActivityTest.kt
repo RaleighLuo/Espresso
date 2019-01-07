@@ -26,7 +26,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /** 主页 MAIN
- * Created by Raleigh.Luo on 2019/01/07 10:57:02.
+ * Created by Raleigh.Luo on 2019/01/07 12:07:40.
  */
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -88,15 +88,31 @@ class MainActivityTest {
 		}
 	}
 	/**
-	 * 验证跳转到Webview
+	 * 验证Dialog
 	 */
 	@Test
 	fun MAIN_010() {
 		with(mActivityTestRule.activity){
+			//点击对话框项
+			TRecyclerView.click_item_text(R.id.main_layout_rl_list,"Show Dialog")
+			//验证对话框文字
+			TWindow.dialog_check_text("是否删除数据？")
+			//点击确定
+			TWindow.dialog_click_text("确定")
+			//验证Toast提示
+			TWindow.toast_check_text(this,"删除成功")
+		}
+	}
+	/**
+	 * 验证跳转到Webview
+	 */
+	@Test
+	fun MAIN_018() {
+		with(mActivityTestRule.activity){
 			//拦截Intent
 			TIntent.intercept_classname("com.gkzxhn.app.WebViewActivity",Instrumentation.ActivityResult(Activity.RESULT_OK,null))
-			//点击第一项
-			TRecyclerView.click_item(R.id.main_layout_rl_list,0)
+			//点击第二项
+			TRecyclerView.click_item(R.id.main_layout_rl_list,1)
 			//验证Intent
 			TIntent.verify_classname("com.gkzxhn.app.WebViewActivity")
 		}

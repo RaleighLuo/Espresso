@@ -1,6 +1,8 @@
 package com.gkzxhn.app
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -15,17 +17,25 @@ import kotlinx.android.synthetic.main.activity_main.main_layout_rl_list
 as mRecyclerView
 import kotlinx.android.synthetic.main.activity_main.main_layout_swipeRefresh
 as mSwipeRefreshLayout
+import android.content.DialogInterface
+import com.gkzxhn.app.R.mipmap.ic_launcher
+
+
 class MainActivity : AppCompatActivity() {
     //自动化测试使用
     private var mIdlingResource: SimpleIdlingResource? = null
     private lateinit var adapter: MainAdapter
     private val mHandler:Handler= Handler()
+    private lateinit var mDialog:AlertDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setTitle("Main")
         adapter = MainAdapter(this)
         adapter.setOnItemClickListener(onItemClickListener)
+        //初始化对话框
+        initdDialog()
+        //初始化数据
         initData()
         mRecyclerView.adapter = adapter
         mSwipeRefreshLayout.setOnRefreshListener {
@@ -42,32 +52,63 @@ class MainActivity : AppCompatActivity() {
 
             },2000)
         }
+
     }
     fun initData(){
         var mDatas:ArrayList<String> = ArrayList<String>()
-        mDatas.add("WebView Page")
-        mDatas.add("Second Page")
-        mDatas.add("Three Page")
+        mDatas.add("Show Dialog")
+        mDatas.add("To WebView")
+        mDatas.add("To Second")
         adapter.updateItems(mDatas)
+    }
+
+    /**
+     * 初始化对话框
+     */
+    private fun initdDialog(){
+        // 创建构建器
+        val mBuilder = AlertDialog.Builder(this)
+        // 设置参数
+        mDialog= mBuilder.setTitle("提示").setIcon(R.mipmap.ic_launcher)
+                .setMessage("是否删除数据？")
+                .setPositiveButton("确定", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        //关闭对话框
+                        mDialog.dismiss()
+                        //提示成功
+                        Toast.makeText(this@MainActivity, "删除成功", Toast.LENGTH_SHORT).show()
+                    }
+
+                }).setNegativeButton("取消", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        //关闭对话框
+                        mDialog.dismiss()
+                    }
+                }).create()
+
     }
     private val onItemClickListener = object : OnItemClickListener {
         override fun onClickListener(convertView: View, position: Int) {
             when(position){
                 0 ->{
-                    startActivityForResult(Intent(this@MainActivity, WebViewActivity::class.java), Activity.RESULT_OK);
-
+                    if(!mDialog.isShowing)mDialog.show()
                 }
                 1 ->{
-                    startActivityForResult(Intent(this@MainActivity, SecondActivity::class.java), Activity.RESULT_OK);
-
+                    startActivityForResult(Intent(this@MainActivity, WebViewActivity::class.java), Activity.RESULT_OK);
                 }
                 2 ->{
-                    startActivityForResult(Intent(this@MainActivity, ThreeActivity::class.java), Activity.RESULT_OK);
+                    startActivityForResult(Intent(this@MainActivity, SecondActivity::class.java), Activity.RESULT_OK);
                 }
             }
 
 
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //关闭窗口，避免窗口溢出
+        if(mDialog.isShowing)mDialog.dismiss()
     }
 
     /**
