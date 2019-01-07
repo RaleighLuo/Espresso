@@ -36,6 +36,8 @@ View API
 
 验证控件文本 check_id_text
 
+验证控件错误提示文本 check_id_error_text
+
 验证控件是否可见 check_id_displayed
 
 验证指定文本是否显示 check_text_displayed
